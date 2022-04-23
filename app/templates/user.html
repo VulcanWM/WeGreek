@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="author" content="{{doc['Username']}}">
+    <meta name="description" content="The profile page of {{doc['Username']}}">
+    <meta name="keywords" content="Greek, Mythology, Wikipedia, wegreek, {{doc['Username']}}">
+		<title>{{doc['Username']}}</title>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="icon" href="static/wegreeklogo.png" type="image/png">
+    <script src="static/script.js"></script>
+	</head>
+<body>
+<style>
+.admin {
+  background-color: blue;
+  color: white;
+  padding: 14px 16px;
+  font-size: 20px;
+}
+.mod {
+  background-color: green;
+  color: white;
+  padding: 14px 16px;
+  font-size: 20px;
+}
+</style>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">WG</a>
+      </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="/allwikis">Browse all wikis</a></li>
+          <li><a href="/allposts">Browse all posts</a></li>
+        </ul>
+    </div>
+  </nav>
+<h1> {{ doc['Username'] }} [{{doc['Votes']}}]</h1>
+<p> <strong>{{ doc['Description'] }}</strong> </p>
+{% if doc['Admin'] == True %}
+  <img src="/static/admin.png" alt="Admin Badge">
+{% endif %}
+{% if doc['MOD'] == True %}
+  <img src="/static/mod.png" alt="Mod Badge">
+{% endif %}
+{% if doc['Wiki Master'] == True %}
+  <img src="/static/wikimaster.png" alt="Wiki Master Badge">
+{% endif %}
+</body>
+</html>

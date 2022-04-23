@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="author" content="{{doc['Author']}}">
+  {% set something = doc['Body'][0:140] + "..." %}
+  {% set desc = "Some information related to " + doc['Title'] + ". " + something %}
+  <meta name="description" content="{{desc}}">
+  <meta name="keywords" content="Greek, Mythology, Wikipedia, {{doc['Title']}}, {{doc['Author']}}, wegreek">
+	<title>{{doc['Title']}}</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <link rel="icon" href="static/wegreeklogo.png" type="image/png">
+  <script src="static/script.js"></script>
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">WG</a>
+      </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="/allwikis">Browse all wikis</a></li>
+          <li><a href="/allposts">Browse all posts</a></li>
+        </ul>
+    </div>
+  </nav>
+	<h3>Author: <a href="/users/{{doc['Author']}}">{{doc['Author']}}</a></h3>
+	<h4>Views: {{doc['Views']}} </h4>
+	<h2>{{doc['Title']}}</h2>
+	<p>{{doc['Body']}}</p>
+  <br>
+  <br>
+  {% if user['PERMS'] == "ADMIN" %}
+    <button id="btn-1" onclick="location = '{{doc['url']}}'">Delete this post</button>
+    <hr>
+    <form action="{{ url_for('commentpost', id=doc['_id']) }}" method="POST">
+      <p><strong>Comment<strong></p>
+      <textarea placeholder="Comment something" name="body" rows="4" cols="40" required></textarea>
+      <br>
+      <button type="submit">Comment</button>
+    </form>
+  {% elif user['PERMS'] == "MOD" %}
+    <button id="btn-1" onclick="location = '{{doc['url']}}'">Delete this post</button>
+    <hr>
+    <form action="{{ url_for('commentpost', id=doc['_id']) }}" method="POST">
+      <p><strong>Comment<strong></p>
+      <textarea placeholder="Comment something" name="body" rows="4" cols="40" required></textarea>
+      <br>
+      <button type="submit">Comment</button>
+    </form>
+  {% elif user['PERMS'] == "YOURPOST" %}
+    <button id="btn-1" onclick="location = '{{doc['url']}}'">Delete this post</button>
+    <hr>
+    <form action="{{ url_for('commentpost', id=doc['_id']) }}" method="POST">
+      <p><strong>Comment<strong></p>
+      <textarea placeholder="Comment something" name="body" rows="4" cols="40" required></textarea>
+      <br>
+      <button type="submit">Comment</button>
+    </form>
+  {% elif user['PERMS'] == "USER" %}
+    <hr>
+    <form action="{{ url_for('commentpost', id=doc['_id']) }}" method="POST">
+      <p><strong>Comment<strong></p>
+      <textarea placeholder="Comment something" name="body" rows="4" cols="40" required></textarea>
+      <br>
+      <button type="submit">Comment</button>
+    </form>
+  {% endif %}
+  <h2>Comments</h2>
+  {% if allcom == [] %}
+    <strong>There are no comments!</strong>
+  {% endif %}
+  {% for comment in allcom %}
+    <h5>{{comment['Comment']}}</h5>
+    {%set theurl = "/users/" + comment['Author']%}
+    <a href={{theurl}}>By {{comment['Author']}}</a>
+    {% if comment['PERMS']!= "USER" and comment['PERMS']!= "NONE" %}
+    <br>
+      <button id="btn-1" onclick="location = '{{comment['Url']}}'">Delete this comment</button>
+    <br>
+    {% endif %}
+  {% endfor %}
+</body>
+</html>

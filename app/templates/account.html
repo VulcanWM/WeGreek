@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+		<title>Account</title>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="icon" href="static/wegreeklogo.png" type="image/png">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="static/script.js"></script>
+	</head>
+<body>  
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">WG</a>
+      </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="/">Home</a></li>
+          <li><a href="/allwikis">Browse all wikis</a></li>
+          <li><a href="/allposts">Browse all posts</a></li>
+        </ul>
+    </div>
+  </nav>
+  <h1>Your account</h1>
+    <form action="{{ url_for('account') }}" method="POST">
+      <h2>Change your description</h2>
+      <div class="container">
+        <p><strong>Description<strong></p>
+        <textarea placeholder="Enter Description" name="description" required>{{ desc }}</textarea>
+        <button class="button" type="submit">Change description</button>
+        
+      </div>
+    </form>
+    <div class="error">
+      <h3><strong>{{ text }}</strong></h3>
+    </div>
+    <h3><a href="/changemail">Change email</a></h3>
+    <h3><a href="/deleteuser">Delete your account</a></h3>
+    {% if check == False %}
+      <h3><a href="/resendverification">Resend Email Verification</a></h3>
+    {% endif %}
+<style>
+.error {
+  text-align: center;
+  color: red;
+}
+/* Full-width inputs */
+input[type=number], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+.button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Add a hover effect for buttons */
+.button:hover {
+  opacity: 0.8;
+}
+</style>
+</body>
+</html>
